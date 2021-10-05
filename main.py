@@ -25,12 +25,12 @@ def main():
     idx = 0
     while True:
         string_val = "".join(choice(ascii_lowercase) for _ in range(1000))
-        data = bytes(string_val * 20000, 'utf-8')
+        data = bytes(string_val * 5000, 'utf-8')
         idx += 1
         print(f'sending message {idx} of size {len(data)}')
         try:
             future = producer.send('topic1', key=bytes(f'{idx}', 'utf-8'), value=data)
-            future.get(timeout=5)
+            future.get(timeout=30)
             print('produced next message')
         except MessageSizeTooLargeError as ex:
             print(f'failed to produce: {ex.message}')
